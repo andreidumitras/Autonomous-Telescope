@@ -1,20 +1,23 @@
 import RPi.GPIO as GPIO
-import time
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 # declarare pini ce trebe folositi.
-GPIO.setup(14,GPIO.OUT)
+pinMotor = 11
 
-# While loop
-while True:
-        # set GPIO14 pin to HIGH
-        GPIO.output(14, GPIO.HIGH)
-        print("LED is ON")
-        time.sleep(1)
+GPIO.setup(pinMotor, GPIO.OUT)
 
-        # set GPIO14 pin to LOW
-        GPIO.output(14,GPIO.LOW)
-        print("LED is OFF")
-        time.sleep(1)
+pwmMotor = GPIO.PWM(pinMotor, 100)
+pwmMotor.start(50)
+
+haida = True
+while haida:
+	dutyc = input("Enter ducy cycle (1 for exit): ")
+	if dutyc == 1:
+		haida = False
+	pwmMotor.ChangeDutyCycle(int(ducyc))
+
+GPIO.cleanup()
+
+print("Finish!")
