@@ -58,21 +58,22 @@ def mpu6050_conv():
 ##    t_val = read_raw_bits(TEMP_OUT_H) # uncomment to read temp
 	
 	# raw gyroscope bits
-	gyro_x = read_raw_bits(GYRO_XOUT_H)
-	gyro_y = read_raw_bits(GYRO_YOUT_H)
-	gyro_z = read_raw_bits(GYRO_ZOUT_H)
+	# gyro_x = read_raw_bits(GYRO_XOUT_H)
+	# gyro_y = read_raw_bits(GYRO_YOUT_H)
+	# gyro_z = read_raw_bits(GYRO_ZOUT_H)
 
 	#convert to acceleration in g and gyro dps
 	a_x = (acc_x/(2.0**15.0))*accel_sens
 	a_y = (acc_y/(2.0**15.0))*accel_sens
 	a_z = (acc_z/(2.0**15.0))*accel_sens
 
-	w_x = (gyro_x/(2.0**15.0))*gyro_sens
-	w_y = (gyro_y/(2.0**15.0))*gyro_sens
-	w_z = (gyro_z/(2.0**15.0))*gyro_sens
+	# w_x = (gyro_x/(2.0**15.0))*gyro_sens
+	# w_y = (gyro_y/(2.0**15.0))*gyro_sens
+	# w_z = (gyro_z/(2.0**15.0))*gyro_sens
 
 ##    temp = ((t_val)/333.87)+21.0 # uncomment and add below in return
-	return a_x,a_y,a_z,w_x,w_y,w_z
+	# return a_x,a_y,a_z,w_x,w_y,w_z
+	return a_x, a_y, a_z
 
 def AK8963_start():
 	bus.write_byte_data(AK8963_ADDR,AK8963_CNTL,0x00)
