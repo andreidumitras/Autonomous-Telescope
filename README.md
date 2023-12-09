@@ -2,7 +2,7 @@
 This project was my Bachelor's Degree Thesis.
 The code controls an automated telescope built from a manual equatorial mount.
 The telescope contains:
- - Raspberry Pi3 - the controller
+ - one Raspberry Pi3 - the controller
  - one accelerometer
  - one magnetometer
  - one GPS sensor
@@ -12,7 +12,7 @@ The telescope contains:
  - two red LEDs
  - two green LEDs
 
-# What the Autonomous Telescope is offering
+# What it does
 The telescope implements three main features:
  - polar alignment assistance
 	- guides the user when the telescope is properly polar aligned
