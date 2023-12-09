@@ -1,6 +1,8 @@
-from mpu9250_i2c import *
 
-time.sleep(1) 
+from mpu9250_i2c import *
+from time import sleep
+
+sleep(1) 
 
 print('recording data')
 while 1:
@@ -15,4 +17,4 @@ while 1:
 	print('gyro [dps]:  x = {0:2.2f}, y = {1:2.2f}, z = {2:2.2f}'.format(wx,wy,wz))
 	print('mag [uT]:   x = {0:2.2f}, y = {1:2.2f}, z = {2:2.2f}'.format(mx,my,mz))
 	print('{}'.format('-'*30))
-	time.sleep(1)
+	sleep(1)

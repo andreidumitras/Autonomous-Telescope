@@ -1,45 +1,70 @@
-import serial              
+# (C) Andrei Dumitras, July 2022
+#
+#  > Faculty of Automation and Computer Science | Automation and Applied Informatics
+#  > Bachelor's Thesis: AUTONOMPUS TELESCOPE
+#
+#  > GPS module
+
+import serial
 from time import sleep
-import sys
+import threading
 
 class GPS:
+	'''
+	__init__(serial_port)
+	Initialize a new GPS object with the specified serial port.
+	'''
 	def __init__(self, serial_port):
 		self.serial_port = serial_port
 	
+	'''
+	convert_to_degrees(raw_value)
+	It converts to degrees from the raw value that is read by the sensor.
+	'''
 	def convert_to_degrees(raw_value):
+		# convert to decimal value
 		decimal_value = raw_value / 100.00
+		# convert to integer degrees
 		degrees = int(decimal_value)
-		mm_mmmm = (decimal_value - int(decimal_value)) / 0.6
-		position = degrees + mm_mmmm
-		position = "%.4f" % (position)
+		# compute the minutes
+		mins = (decimal_value - int(decimal_value)) / 0.6
+		# compute the position in degrees and minutes
+		position = degrees + mins
 		return position
 
+	'''
+	start()
+	start a new thread for the GPS chip: vk2828u7g5lf
+	'''
 	def start(self):
 		threading.Thread(target = self.vk2828u7g5lf).start()
 
+	'''
+	vk2828u7g5lf()
+	Accuire data from the sensor.
+	'''
 	def vk2828u7g5lf(self):
+		# accuire data from the serial protocol
 		ser = serial.Serial(self.serial_port)
+		# initialize the buffers
 		gpgga_info = "$GPGGA,"
 		GPGGA_buffer = 0
 		NMEA_buff = 0
 		try:
+			# accuire data continuously
 			while True:
-				received_data = (str)(ser.readline())					#read NMEA string received
-				GPGGA_data_available = received_data.find(gpgga_info)	#check for NMEA GPGGA string                
+				# read NMEA string received
+				received_data = (str)(ser.readline())
+				# check for NMEA GPGGA string
+				GPGGA_data_available = received_data.find(gpgga_info)
 				if (GPGGA_data_available > 0):
-					GPGGA_buffer = received_data.split("$GPGGA,", 1)[1]	#store data coming after “$GPGGA,” string
+					# store data coming after "$GPGGA," string
+					GPGGA_buffer = received_data.split("$GPGGA,", 1)[1]
 					NMEA_buff = (GPGGA_buffer.split(','))
-					# nmea_time = []
 					nmea_latitude = []
-					# nmea_longitude = []
-					# nmea_time = NMEA_buff[0]                    #extract time from GPGGA string
-					nmea_latitude = NMEA_buff[1]                #extract latitude from GPGGA string
-					# nmea_longitude = NMEA_buff[3]               #extract longitude from GPGGA string
-					# print("NMEA Time: ", nmea_time,'\n')
+					# extract latitude from GPGGA string
+					nmea_latitude = NMEA_buff[1]
 					lat = (float)(nmea_latitude)
-					lat = convert_to_degrees(lat)
-					# longi = (float)(nmea_longitude)
-					# longi = convert_to_degrees(longi)
-					# print ("NMEA Latitude:", lat,"NMEA Longitude:", longi,'\n') 
+					lat = self.convert_to_degrees(lat)
 		except Exception as e:
 			print(e)
