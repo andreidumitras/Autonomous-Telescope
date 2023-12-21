@@ -1,7 +1,9 @@
 # Autonomous Telescope
  - July 2022
  - Bachelor's Degree Thesis.
+ - Technial University of Cluj-Napoca
 
+# Description
 The code controls an automated telescope built from a manual equatorial mount.
 The telescope contains:
  - one Raspberry Pi3 - the controller
@@ -14,7 +16,7 @@ The telescope contains:
  - two red LEDs
  - two green LEDs
 
-# What it does
+### What it does
 The telescope implements three main features:
  - polar alignment assistance
 	- it guides the user when the telescope is properly polar aligned
@@ -22,9 +24,13 @@ The telescope implements three main features:
  - pinpoint a specified celestial object by its Right Ascension and Declination coordinates.
  - star tracking the specified object over long periods of time
 	 - a helpful feature for astrophotography.
+# Inmplementation
 
 # Usage
 The telescope is controlled by a Raspberry Pi3. The user should connect to the Raspberry Pi through ssh and start the control algorithm from there.
+```bash
+ssh pi@raspberrypi.local
+```
 The program must receive as arguments the Right Ascension and Declination values to start.
 
 # Further development
